@@ -1,0 +1,35 @@
+#screen {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#board-container {}
+
+.board-row-container {
+    display: flex;
+    height: 35px;
+}
+
+.board-col-container {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #000;
+}
+
+.spot-row-container {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    translate: 17.5px -17.5px;
+}
+
+.spot-col-container {
+    width: 35px;
+    height: 35px;
+    border-radius: 35px;
+    /* background-color: aqua;
+    border: 1px #000 solid; */
+}
