@@ -1,7 +1,14 @@
 const DEFAULT_BOARD_SIZE = 20;
 
 const spots = []
-let turn = "black"
+let state = []
+let turn = "b"
+
+const stateToColor = {
+    "e": "none",
+    "b": "#000",
+    "w": "#bbb"
+}
 
 
 function constructBoard(dim) {
@@ -21,6 +28,7 @@ function constructBoard(dim) {
         spotRowContainer.style.width = GRID_SIZE * (dim-1) + "px";
 
         let rowSpots = []
+        let rowState = []
 
         for (let c = 0; c < dim; c++) {
             let colContainer = document.createElement("div");
@@ -34,6 +42,7 @@ function constructBoard(dim) {
                 spotColContainer.onclick = generateHandleSpotClick(r, c);
                 spotRowContainer.appendChild(spotColContainer);
                 rowSpots.push(spotColContainer);
+                rowState.push("e");
             }
         }
 
@@ -41,18 +50,34 @@ function constructBoard(dim) {
         if (r != dim - 1) {
             boardContainer.appendChild(spotRowContainer);
             spots.push(rowSpots);
+            state.push(rowState);
+        }
+    }
+}
+
+
+function updateOneSpot(r, c, turn) {
+    spots[r][c].style.backgroundColor = stateToColor[turn];
+}
+
+
+function renderBoard() {
+    for (r = 0; r < DEFAULT_BOARD_SIZE - 1; r++) {
+        for (c = 0; c < DEFAULT_BOARD_SIZE - 1; c++) {
+            spots[r][c].style.backgroundColor = stateToColor[state[r][c]]       
         }
     }
 }
 
 
 const generateHandleSpotClick = (r, c) => () => {
-    spots[r][c].style.backgroundColor = turn
-    if (turn === "black") {
-        turn = "#bbb"
-    } else {
-        turn = "black"
-    }
+    if (state[r][c] != "e") return;
+    state[r][c] = turn;
+    updateOneSpot(r, c, turn);
+
+    // toggle turns
+    turn = turn == 'b' ? 'w' : 'b';
 }
+
 
 constructBoard(DEFAULT_BOARD_SIZE);
